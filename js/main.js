@@ -9,15 +9,26 @@ function getPelicula(id){
 getPelicula(2);
 
 function getCliente(id){
-    fetch(`http://172.30.198.219:8080/api/pelicula/${id}`)
-    .then.apply((res)=>res.json())
+    fetch(`http://172.30.198.219:8080/api/usuario/${id}`)
+    .then((res)=>res.json())
     .then((data)=>{
      console.log(data);
  
     })
  }
- getCliente(0);
+ getCliente(7);
 
+
+ function deleteCliente(id){
+    fetch(`http://172.30.198.219:8080/api/cliente/${id}`)
+    .then((res)=>res.json())
+    .then((data)=>{
+     console.log(data);
+ 
+    })
+
+ }
+ //deleteCliente(2);
 
 function addCliente(cliente){
     fetch(`http://172.30.198.219:8080/api/usuario/`, 
