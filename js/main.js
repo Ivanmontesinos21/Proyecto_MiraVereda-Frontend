@@ -1,3 +1,41 @@
+function getPelicula(id){
+   fetch(`http://172.30.198.219:8080/api/pelicula/${id}`)
+   .then((res)=>res.json())
+   .then((data)=>{
+    console.log(data);
+
+   })
+}
+getPelicula(2);
+
+function getCliente(id){
+    fetch(`http://172.30.198.219:8080/api/pelicula/${id}`)
+    .then.apply((res)=>res.json())
+    .then((data)=>{
+     console.log(data);
+ 
+    })
+ }
+ getCliente(0);
+
+
+function addCliente(cliente){
+    fetch(`http://172.30.198.219:8080/api/usuario/`, 
+        {
+            method: "POST",
+            body: JSON.stringify(cliente)
+        }
+    )
+    .then((res)=>res.json())
+    .then((data)=>{
+        console.log(data);
+
+    })
+}
+
+
+
+
 function setCredentials(email, password) {
     setCookie("email", email, 14);
     setCookie("password", password, 14);
