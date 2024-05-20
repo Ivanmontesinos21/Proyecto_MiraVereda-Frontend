@@ -182,7 +182,7 @@ function eraseCookie(name) {
 }
 
 function intToDate(int) {
-    return new Date(int);
+    return new Date(int * 1000);
 }
 
 function segToDuracion(seconds, max = -1) {
