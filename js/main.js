@@ -1,24 +1,70 @@
 const ipUrl = "localhost";
 
 function getPelicula(id){
-   fetch(`http://172.30.198.219:8080/api/pelicula/${id}`)
+   fetch(ipUrl+`/api/pelicula/${id}`)
    .then((res)=>res.json())
    .then((data)=>{
     console.log(data);
 
    })
 }
-getPelicula(2);
+//getPelicula(2);
 
-function getCliente(id){
-    fetch(`http://172.30.198.219:8080/api/usuario/${id}`)
-    .then((res)=>res.json())
-    .then((data)=>{
-     console.log(data);
- 
+function getCliente(){
+    let clientes=[];
+  
+     
+    fetch(ipUrl+`/api/usuario/`)
+    .then(res=>{res.json()
+    .then(json=>{
+     //console.log(data);
+     clientes=json; 
+     console.log(clientes);
+
+    let contenedor=document.getElementById("usuarios");
+    contenedor.innerHTML="";
+    clientes.forEach(cliente=>{
+        contenedor.innerHTML+=
+        `
+        <tr>
+            <td>${cliente.id}</td>
+            <td>${cliente.nombre}</td>
+            <td>${cliente.apellido}</td>
+            <td>${cliente.email}</td>
+            <td>${cliente.fechaNacimiento}</td>
+            <td>${cliente.domicilio}</td>
+            <td>${cliente.codigoPostal}</td>
+       
+        </tr>
+
+
+        `;
     })
+    });
+});
+    
+
+/*
+    let contenedor2;
+    contenedor2:documento.getElementsById("tarjetas");
+    clientes.forEach(tarjeta=>{
+        contenedor2.innerHTML+=
+        `
+        <tr>
+            <td>${tarjeta.id}</td>
+            <td>${tarjeta.numTarjeta}</td>
+            <td>${tarjeta.CVV}</td>
+            <td>${tarjeta.fechaCaducidad}</td>
+            <td>${tarjeta.titular}</td>
+       
+        </tr>
+
+
+        `;
+    })
+    */
  }
- getCliente(7);
+ //getCliente(7);
 
 
  function deleteCliente(id){
@@ -32,22 +78,59 @@ function getCliente(id){
  }
  //deleteCliente(2);
 
-function addCliente(cliente){
-    fetch(`http://172.30.198.219:8080/api/usuario/`, 
+function addCliente(){
+    /*
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://172.30.198.219:8080/api/cliente/");
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    //xhr.responseType="json";
+    const body=JSON.stringify({
+        nombre:document.getElementById("nombre").value,
+        apellidos:document.getElementById("apellidos").value,
+        email:document.getElementById("email").value,
+        fechaNacimiento:document.getElementById("fechaNacimiento").value,
+        domiclio:document.getElementById("domicilio").value,
+        codigoPostal:document.getElementById("codigoPostal").value
+    });
+    xhr.onload=()=>{
+        if (xhr.readyState == 4 && xhr.status == 201) {
+            console.log(JSON.parse(xhr.responseText));
+          } else {
+            console.log(`Error: ${xhr.status}`);
+          }
+    };
+        xhr.send(body);
+
+        */
+  let  cliente={
+        nombre:document.getElementById("nombre").value,
+        apellidos:document.getElementById("apellidos").value,
+        email:document.getElementById("email").value,
+        fechaNacimiento:dateToInt(document.getElementById("fechaNacimiento").value),
+        contrasenya:document.getElementById("contrasenya").value,
+        domicilio:document.getElementById("domicilio").value,
+        codigoPostal:document.getElementById("codigoPostal").value
+    };
+
+    fetch(ipUrl+`/api/usuario/`, 
         {
             method: "POST",
-            body: JSON.stringify(cliente)
-        }
-    )
-    .then((res)=>res.json())
-    .then((data)=>{
-        console.log(data);
+            body: JSON.stringify(cliente),
 
-    })
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8'
+              },
+              
+        })
+    .then((res)=>res.json())
+    .then((json)=>{
+        console.log(json);})
+        .ca
+    
 }
 
 
-
+//addCliente('Paco','Mariano','1234','aules@asdf','Mi casa','4783',Date('2000-02-02'));
 
 function setCredentials(email, password) {
     setCookie("email", email, 14);
