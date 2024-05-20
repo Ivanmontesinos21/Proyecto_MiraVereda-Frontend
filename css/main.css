@@ -11,7 +11,7 @@ body {
 	flex-direction: column;
 	margin: 0;
 	height: 100vh;
-	background-color: var(--secondary);
+	background-color: var(--background);
 	color: var(--text);
 	font-family: arial, sans-serif;
 }
@@ -272,4 +272,24 @@ footer {
 
 .dropdown.accounts > .dropdown-menu {
 	right: 5px;
+}
+
+.card-panel {
+	background-color: var(--secondary);
+	border: solid 3px var(--primary);
+	border-radius: 10px;
+	box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.4);
+	box-sizing: border-box;
+	padding: 10px;
+	margin-bottom: 15px;
+}
+
+.card-panel > p, .card-panel > h3 {
+	margin-top: 2px;
+	margin-bottom: 2px;
+}
+
+.card-panel > .button {
+	margin-top: 10px;
+	margin-right: 6px;
 }

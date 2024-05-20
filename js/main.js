@@ -1,3 +1,5 @@
+const ipUrl = "localhost";
+
 function getPelicula(id){
    fetch(`http://172.30.198.219:8080/api/pelicula/${id}`)
    .then((res)=>res.json())
@@ -66,12 +68,6 @@ function login() {
     setCredentials(email.value, password.value);
 }
 
-let loginForm = document.getElementById("login-form");
-loginForm.addEventListener("submit", event => {
-    event.preventDefault();
-    login();
-});
-
 // https://stackoverflow.com/a/24103596
 function setCookie(name, value, days) {
     let expires = "";
@@ -100,4 +96,30 @@ function getCookie(name) {
 // https://stackoverflow.com/a/24103596
 function eraseCookie(name) {   
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+function intToDate(int) {
+    return new Date(int);
+}
+
+function segToDuracion(seconds, max = -1) {
+	let times = [
+		[31536000, "año"],
+		[86400, "día"],
+		[3600, "hora"],
+		[60, "minuto"],
+		[1, "segundo"]
+	];
+	let text = [];
+	for(let i=0; i<times.length; i++){
+		let interval = seconds / times[i][0];
+		let time = Math.floor(interval);
+		if(interval >= 1) {
+			text.push(time + " " + times[i][1] + (time == 1 ? "" : "s"));
+		}
+		seconds -= time * times[i][0];
+		if(text.length == max)
+			break;
+	}
+	return text.length == 0 ? "0 segundos" : text.join(" ");
 }
