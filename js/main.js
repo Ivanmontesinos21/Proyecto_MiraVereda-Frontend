@@ -39,9 +39,11 @@ function getCliente(){
 
 
         `;
-    })
+        })
     });
 });
+
+}
     
 
 /*
@@ -63,7 +65,7 @@ function getCliente(){
         `;
     })
     */
- }
+
 
 
 
@@ -86,7 +88,7 @@ function getCliente(){
 
  };
 
- function updateCliente(id){
+ function updateCliente(){
     
   let  clientes=[];
   let cliente,nombreViejo,apellidosViejo,emailViejo,
@@ -109,13 +111,14 @@ function getCliente(){
     }),
     */
      
-    fetch(ipUrl+`/api/usuario/`),{ method: "PUT",
+    fetch(ipUrl+`/api/usuario/`,{ method: "PUT",
     body: JSON.stringify(cliente),
 
     headers: {
         'Content-type': 'application/json; charset=UTF-8'
-      }}
-    .then(res=>{res.json()
+    }})
+
+    .then((response)=>response.json())
     .then(json=>{
      //console.log(data);
      clientes=json; 
@@ -130,15 +133,7 @@ function getCliente(){
              domicilioViejo=cliente.domicilio;
              codigoPostalViejo=cliente.codigoPostal;
            
-/*
-        nombreViejo:cliente.getElementById("nombre").value;
-        apellidosViejo:cliente.getElementById("nombre").value;
-        emailViejo:cliente.getElementById("nombre").value;
-        fechaNacimientoViejo:cliente.getElementById("apellidos").value;
-        contrasenyaViejo:cliente.getElementById("nombre").value;
-        domicilioViejo:cliente.getElementById("nombre").value;
-        codigoPostalViejo:cliente.getElementById("nombre").value;
-*/
+ 
         }
      
     })
@@ -154,9 +149,12 @@ function getCliente(){
             domicilio:document.getElementById("domicilio").value=domicilioViejo,
             codigoPostal:document.getElementById("codigoPostal").value=codigoPostalViejo
             };
-        });
-});
-};
+        }).  then((data)=>{
+            console.log(data);
+        
+           })
+
+}
 
 
 function addCliente(){
@@ -180,7 +178,10 @@ function addCliente(){
     .then((res)=>res.json())
     .then((json)=>{
         console.log(json);})
-    
+        .then((data)=>{
+            console.log(data);
+        
+           })
 }
 
 
