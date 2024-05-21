@@ -1,4 +1,4 @@
-const ipUrl = "localhost";
+const ipUrl = "http://172.30.134.201:8080";
 
 function getPelicula(id){
    fetch(ipUrl+`/api/pelicula/${id}`)
@@ -8,100 +8,155 @@ function getPelicula(id){
 
    })
 }
-//getPelicula(2);
 
-function getCliente(){
-    let clientes=[];
-  
-     
+function getClienteId(){
+    let inputId=document.getElementById("id");
+    if(inputId.value.length == 0) {
+        getClientes();
+        return;
+    }
+let cliente;
+fetch(ipUrl+`/api/usuario/${inputId.value}`)
+            .then(res => {
+                if(res.ok) {
+                    res.json().then(data=>{
+                        cliente=data; 
+                      
+                       let contenedor=document.getElementById("usuarios");
+                       contenedor.innerHTML="";
+           
+                               
+                       let clienteElem = renderCliente(cliente);
+                   
+                           contenedor.appendChild(clienteElem);
+           
+                      });
+                }
+                else {
+                    res.text().then(err => alert(err));
+                }
+            })
+}
+
+function getClientes(){
     fetch(ipUrl+`/api/usuario/`)
-    .then(res=>{res.json()
-    .then(json=>{
-     //console.log(data);
-     clientes=json; 
-     console.log(clientes);
+    .then(res=>res.json())
+    .then(clientes=>{
 
     let contenedor=document.getElementById("usuarios");
     contenedor.innerHTML="";
+ 
     clientes.forEach(cliente=>{
-        contenedor.innerHTML+=
-        `
-        <tr>
-            <td>${cliente.id}</td>
-            <td>${cliente.nombre}</td>
-            <td>${cliente.apellido}</td>
-            <td>${cliente.email}</td>
-            <td>${cliente.fechaNacimiento}</td>
-            <td>${cliente.domicilio}</td>
-            <td>${cliente.codigoPostal}</td>
-       
-        </tr>
+    
+        let clienteElem = renderCliente(cliente);
 
-
-        `;
+        contenedor.appendChild(clienteElem);
+        
     })
-    });
-});
+
+    })
+}
+
+function renderCliente(cliente) {
+    let clienteElem = document.createElement("div");
+        clienteElem.className = "card-panel fill-horizontal";
+
+        let id = document.createElement("h3");
+        id.innerText = cliente.id;
+        clienteElem.appendChild(id);
+
+        let nombre = document.createElement("p");
+        nombre.innerText = "Nombre: " + cliente.nombre;
+        clienteElem.appendChild(nombre);
+
+        let apellidos = document.createElement("p");
+        apellidos.innerText = "Apellidos: " +  cliente.apellidos;
+        clienteElem.appendChild(apellidos);
+
+        let email = document.createElement("p");
+        email.innerText = "Email: " + cliente.email;
+        clienteElem.appendChild(email);
+
+        let fechaNacimiento = document.createElement("p");
+        fechaNacimiento.innerText = "Fecha de Nacimiento: "+ intToDate(cliente.fechaNacimiento).toLocaleDateString();
+        clienteElem.appendChild(fechaNacimiento);
+
+        let domicilio = document.createElement("p");
+        domicilio.innerText = "Domicilio: " +  cliente.domicilio;
+        clienteElem.appendChild(domicilio);
+
+        let codigoPostal = document.createElement("p");
+        codigoPostal.innerText ="Código Postal: " +  cliente.codigoPostal;
+        clienteElem.appendChild(codigoPostal);
+
+        let botonEditar = document.createElement("a");
+        botonEditar.className = "button";
+        botonEditar.innerText = "Editar";
+        botonEditar.href = "Actualizar_Usuario.html?id=" + cliente.id;
+        clienteElem.appendChild(botonEditar);
+
+        let botonEliminar = document.createElement("button");
+        botonEliminar.className = "button";
+        botonEliminar.innerText = "Eliminar";
+        botonEliminar.onclick = function() {
+            deleteCliente(cliente.id);
+        };
+        clienteElem.appendChild(botonEliminar);
+
+        return clienteElem;
+}
+
+function getClienteIdUpdate(id){
+let cliente;
+fetch(ipUrl+`/api/usuario/${id}`)
+            .then(res => {
+                if(res.ok) {
+                    res.json().then(data=>{
+                        cliente=data; 
+                   
+                        document.getElementById("nombre").value=cliente.nombre;
+                        document.getElementById("apellidos").value=cliente.apellidos;
+                        document.getElementById("email").value=cliente.email;
+                        document.getElementById("fechaNacimiento").valueAsDate=intToDate(cliente.fechaNacimiento);
+                        document.getElementById("domicilio").value=cliente.domicilio;
+                        document.getElementById("codigoPostal").value=cliente.codigoPostal;
+
+                    
+           
+                      });
+                }
+                else {
+                    res.text().then(err => alert(err));
+                }
+            })
+}
     
 
-/*
-    let contenedor2;
-    contenedor2:documento.getElementsById("tarjetas");
-    clientes.forEach(tarjeta=>{
-        contenedor2.innerHTML+=
-        `
-        <tr>
-            <td>${tarjeta.id}</td>
-            <td>${tarjeta.numTarjeta}</td>
-            <td>${tarjeta.CVV}</td>
-            <td>${tarjeta.fechaCaducidad}</td>
-            <td>${tarjeta.titular}</td>
-       
-        </tr>
-
-
-        `;
-    })
-    */
- }
- //getCliente(7);
-
-
  function deleteCliente(id){
-    fetch(`http://172.30.198.219:8080/api/cliente/${id}`)
-    .then((res)=>res.json())
-    .then((data)=>{
-     console.log(data);
- 
-    })
+   
+
+let cliente;
+fetch(ipUrl+`/api/usuario/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(cliente)
+})
+.then(response => {
+    return response.json( )
+})
+.then(data => {
+    console.log(data);
+    location.reload();
+ });
+
 
  }
  //deleteCliente(2);
 
 function addCliente(){
-    /*
-    const xhr = new XMLHttpRequest();
-    xhr.open("POST", "https://172.30.198.219:8080/api/cliente/");
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    //xhr.responseType="json";
-    const body=JSON.stringify({
-        nombre:document.getElementById("nombre").value,
-        apellidos:document.getElementById("apellidos").value,
-        email:document.getElementById("email").value,
-        fechaNacimiento:document.getElementById("fechaNacimiento").value,
-        domiclio:document.getElementById("domicilio").value,
-        codigoPostal:document.getElementById("codigoPostal").value
-    });
-    xhr.onload=()=>{
-        if (xhr.readyState == 4 && xhr.status == 201) {
-            console.log(JSON.parse(xhr.responseText));
-          } else {
-            console.log(`Error: ${xhr.status}`);
-          }
-    };
-        xhr.send(body);
-
-        */
+  
   let  cliente={
         nombre:document.getElementById("nombre").value,
         apellidos:document.getElementById("apellidos").value,
@@ -123,14 +178,78 @@ function addCliente(){
               
         })
     .then((res)=>res.json())
-    .then((json)=>{
-        console.log(json);})
-        .ca
+    .then((data)=>{
+        data;})
+        
     
 }
 
 
-//addCliente('Paco','Mariano','1234','aules@asdf','Mi casa','4783',Date('2000-02-02'));
+
+function updateCliente(){
+    
+    let clientes=[];
+    let clienteNew,nombreViejo,apellidosViejo,emailViejo,
+    fechaNacimientoViejo,contrasenyaViejo,domicilioViejo,
+    codigoPostalViejo;
+
+    
+    const newUser={
+            id:document.getElementById("id").value,          
+            nombre:document.getElementById("nombre").value,          
+            apellidos:document.getElementById("apellidos").value,
+            email:document.getElementById("email").value,
+            fechaNacimiento:dateToInt(document.getElementById("fechaNacimiento").value),
+            contrasenya:document.getElementById("contrasenya").value,
+            domicilio:document.getElementById("domicilio").value,
+            codigoPostal:document.getElementById("codigoPostal").value
+            };
+            const options={
+                method: "PUT",
+                body: JSON.stringify(newUser),
+                headers: {   'Content-type': 'application/json; charset=UTF-8'}
+            }
+  
+  /*
+    for (i = 0; i < usuarios.length; i++) {
+    cliente={
+      nombre:document.getElementById("nombre").value,
+      usuarios[i].getElementsByTagName("username")[0].textContent=user_introducido;
+  
+      apellidos:document.getElementById("apellidos").value,
+      email:document.getElementById("email").value,
+      fechaNacimiento:date.intToDate(document.getElementById("fechaNacimiento").value),
+      contrasenya:document.getElementById("contrasenya").value,
+      domicilio:document.getElementById("domicilio").value,
+      codigoPostal:document.getElementById("codigoPostal").value
+          }
+      }),
+      */
+        fetch(ipUrl+`/api/usuario/`,options)
+        .then(res => {
+            if(res.ok)
+                alert("Se ha modificado el usuario con exito");
+            else
+                res.json().then(json => alert(json.message));
+        })
+  /*
+        clientes.forEach(cliente=>{
+  
+            if(cliente.id==document.getElementById("nombre").value){
+                 nombreViejo=cliente.nombre;
+                 apellidosViejo=cliente.apellidos;
+                 emailViejo=cliente.email;
+                 fechaNacimientoViejo=cliente.fechaNacimiento;
+                 contrasenyaViejo=cliente.contrasenya;
+                 domicilioViejo=cliente.domicilio;
+                 codigoPostalViejo=cliente.codigoPostal;
+               
+     
+            }
+            */
+          
+  }
+  
 
 function setCredentials(email, password) {
     setCookie("email", email, 14);
@@ -183,6 +302,10 @@ function eraseCookie(name) {
 
 function intToDate(int) {
     return new Date(int * 1000);
+}
+
+function dateToInt(date) {
+    return new Date(date).getTime() / 1000;
 }
 
 function segToDuracion(seconds, max = -1) {

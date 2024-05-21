@@ -1,7 +1,7 @@
 const peliculaList = document.getElementById("pelicula-list");
 
 function getPeliculas() {
-    fetch(`http://${ipUrl}:8080/api/pelicula/`)
+    fetch(`${ipUrl}/api/pelicula/`)
         .then(res => res.json())
         .then(peliculas => {
             for(let pelicula of peliculas) {
