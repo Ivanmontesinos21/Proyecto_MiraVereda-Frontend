@@ -161,22 +161,18 @@ function addCliente(){
         nombre:document.getElementById("nombre").value,
         apellidos:document.getElementById("apellidos").value,
         email:document.getElementById("email").value,
-        fechaNacimiento:dateToInt(document.getElementById("fechaNacimiento").value),
+        fechaNacimiento:date.intToDate(document.getElementById("fechaNacimiento").value),
         contrasenya:document.getElementById("contrasenya").value,
         domicilio:document.getElementById("domicilio").value,
         codigoPostal:document.getElementById("codigoPostal").value
     };
 
-    fetch(ipUrl+`/api/usuario/`, 
-        {
-            method: "POST",
+    fetch(ipUrl+`/api/usuario/`,{ method: "POST",
             body: JSON.stringify(cliente),
 
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
-              },
-              
-        })
+              },})
     .then((res)=>res.json())
     .then((data)=>{
         data;})
