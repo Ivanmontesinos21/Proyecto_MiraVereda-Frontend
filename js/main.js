@@ -160,7 +160,7 @@ function renderPelicula(pelicula) {
         botonEliminar.className = "button";
         botonEliminar.innerText = "Eliminar";
         botonEliminar.onclick = function() {
-            deletepelicula(pelicula.id);
+            deletePelicula(pelicula.id);
 
 
         };
@@ -297,6 +297,42 @@ fetch(ipUrl+`/api/usuario/${id}`)
 }
     
 
+
+function getPeliculaIdUpdate(id){
+    let pelicula;
+    fetch(ipUrl+`/api/pelicula/${id}`)
+                .then(res => {
+                    if(res.ok) {
+                        res.json().then(data=>{
+                            pelicula=data; 
+                       
+                            document.getElementById("id").value=pelicula.id;
+                            document.getElementById("titulo").value=pelicula.titulo;
+                            document.getElementById("descripcion").value=pelicula.descripcion;
+                            document.getElementById("genero").value=pelicula.genero;
+                            document.getElementById("duracion").value=pelicula.duracion;
+                            document.getElementById("fecha_estreno").valueAsDate=intToDate(pelicula.codigoPostal);
+                            document.getElementById("nombre_director").value=pelicula.nombre_director;
+                            document.getElementById("id_actores").value=pelicula.id_actores;
+                            document.getElementById("id_tarifa").value=pelicula.id_tarifa;
+                            document.getElementById("precio").value=pelicula.precio;
+                            document.getElementById("version_Idioma").value=pelicula.version_Idioma;
+                            document.getElementById("disponibleHasta").valueAsDate=intToDate(pelicula.disponibleHasta);
+                            document.getElementById("disponibleDesde").valueAsDate=intToDate(pelicula.disponibleDesde);
+                            document.getElementById("idSerie").value=pelicula.idSerie;
+                            document.getElementById("temporada").value=pelicula.temporada;
+    
+                        
+               
+                          });
+                    }
+                    else {
+                        res.text().then(err => alert(err));
+                    }
+                })
+    }
+
+    
  function deleteCliente(id){
    
 
@@ -318,7 +354,28 @@ fetch(ipUrl+`/api/usuario/${id}`, {
 
 
  }
- //deleteCliente(2);
+
+ function deletePelicula(id){
+   
+
+    let cliente;
+    fetch(ipUrl+`/api/usuario/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cliente)
+    })
+    .then(response => {
+        return response.json( )
+    })
+    .then(data => {
+        console.log(data);
+        location.reload();
+     });
+    
+    
+     }
 
 function addCliente(){
   
@@ -359,11 +416,7 @@ function expandir_formulario(){
 
 
 function addPelicula(){
-    /*
-     let idActores=[];
-     idActores=document.getElementById("id_actores").split(document.getElementById("idTarifa").values.length())
-   console.log(idActores);
-   */
+
         let  pelicula={
             tipo:document.getElementById("tipo").value,
             titulo:document.getElementById("titulo").value,
@@ -397,11 +450,6 @@ function addPelicula(){
   }
 
 function updateCliente(){
-    
-    let clientes=[];
-    let clienteNew,nombreViejo,apellidosViejo,emailViejo,
-    fechaNacimientoViejo,contrasenyaViejo,domicilioViejo,
-    codigoPostalViejo;
 
     
     const newUser={
@@ -431,6 +479,40 @@ function updateCliente(){
   
           
   }
+  
+
+  function updatePelicula(){
+
+    
+    const newPelicula={
+            id:document.getElementById("id").value,          
+            nombre:document.getElementById("nombre").value,          
+            apellidos:document.getElementById("apellidos").value,
+            email:document.getElementById("email").value,
+            fechaNacimiento:dateToInt(document.getElementById("fechaNacimiento").value),
+            contrasenya:document.getElementById("contrasenya").value,
+            domicilio:document.getElementById("domicilio").value,
+            codigoPostal:document.getElementById("codigoPostal").value
+            };
+            const options={
+                method: "PUT",
+                body: JSON.stringify(newPelicula),
+                headers: {   'Content-type': 'application/json; charset=UTF-8'}
+            }
+  
+  
+        fetch(ipUrl+`/api/usuario/`,options)
+        .then(res => {
+            if(res.ok)
+                alert("Se ha modificado el usuario con exito");
+            else
+                res.json().then(json => alert(json.message));
+        })
+  
+          
+  }
+
+  
   
 
 function setCredentials(email, password) {
