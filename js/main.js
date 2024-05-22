@@ -1,4 +1,4 @@
-const ipUrl = "http://172.30.134.201:8080";
+const ipUrl = "http://localhost:8080";
 
 function getPelicula(id){
    fetch(ipUrl+`/api/pelicula/${id}`)
@@ -8,6 +8,175 @@ function getPelicula(id){
 
    })
 }
+
+function getPeliculaId(){
+    let inputId=document.getElementById("id");
+    if(inputId.value.length == 0) {
+        getPeliculas();
+        return;
+    }
+let pelicula;
+fetch(ipUrl+`/api/pelicula/${inputId.value}`)
+            .then(res => {
+                if(res.ok) {
+                    res.json().then(data=>{
+                        pelicula=data; 
+                      
+                       let contenedor=document.getElementById("peliculas");
+                       contenedor.innerHTML="";
+           
+                               
+                       let peliculaElem = renderPelicula(pelicula,pelicula.actores);
+                   
+                           contenedor.appendChild(peliculaElem);
+           
+                      });
+                }
+                else {
+                    res.text().then(err => alert(err));
+                }
+            })
+}
+
+
+function getPeliculas(){
+    fetch(ipUrl+`/api/pelicula/`)
+    .then(res=>res.json())
+    .then(peliculas=>{
+
+    let contenedor=document.getElementById("peliculas");
+    contenedor.innerHTML="";
+ 
+    peliculas.forEach(pelicula=>{
+    
+        let peliculaElem = renderPelicula(pelicula,pelicula.actores);
+
+        contenedor.appendChild(peliculaElem);
+        
+    })
+
+    })
+}
+
+
+function renderPelicula(pelicula,actor) {
+    let peliculaElem = document.createElement("div");
+        peliculaElem.className = "card-panel fill-horizontal";
+
+        let id = document.createElement("h3");
+        id.innerText = "Id: "+pelicula.id;
+        peliculaElem.appendChild(id);
+
+        let tipo = document.createElement("p");
+        tipo.innerText = "Tipo: " + pelicula.tipo;
+        peliculaElem.appendChild(tipo);
+
+        let titulo = document.createElement("p");
+        titulo.innerText = "Titulo: " +  pelicula.titulo;
+        peliculaElem.appendChild(titulo);
+
+        let descripcion = document.createElement("p");
+        descripcion.innerText = "Descripción: " + pelicula.descripcion;
+        peliculaElem.appendChild(descripcion);
+
+        let genero = document.createElement("p");
+        genero.innerText = "Genero: "+ intToDate(pelicula.genero).toLocaleDateString();
+        peliculaElem.appendChild(genero);
+
+        let duracion = document.createElement("p");
+        duracion.innerText = "Duración: " +  pelicula.duracion;
+        peliculaElem.appendChild(duracion);
+
+        let fechaEstreno = document.createElement("p");
+        fechaEstreno.innerText ="Fecha estreno: " +  pelicula.fechaEstreno;
+        peliculaElem.appendChild(fechaEstreno);
+
+        let nombreDirector = document.createElement("p");
+        nombreDirector.innerText ="Nombre director: " +  pelicula.nombreDirector;
+        peliculaElem.appendChild(nombreDirector);
+
+        let valoracionMedia = document.createElement("p");
+        valoracionMedia.innerText ="Valoración media estreno: " +  pelicula.valoracionMedia;
+        peliculaElem.appendChild(valoracionMedia);
+
+        let idTarifa = document.createElement("p");
+        codigoPostal.innerText ="idTarifa: " +  pelicula.idTarifa;
+        peliculaElem.appendChild(idTarifa);
+
+        let imagen_url = document.createElement("p");
+        codigoPostal.innerText ="Imagen Url: " +  pelicula.imagen_url;
+        peliculaElem.appendChild(imagen_url);
+
+        let precio = document.createElement("p");
+        precio.innerText ="Precio: " +  pelicula.precio;
+        peliculaElem.appendChild(precio);
+
+        let precioConTarifa = document.createElement("p");
+        precioConTarifa.innerText ="Precio Con Tarifa: " +  pelicula.precioConTarifa;
+        peliculaElem.appendChild(precioConTarifa);
+
+        let versionIdioma = document.createElement("p");
+        versionIdioma.innerText ="Version Idioma: " +  pelicula.versionIdioma;
+        peliculaElem.appendChild(versionIdioma);
+
+        let idActor = document.createElement("p");
+        idActor.innerText ="Id De Actor: " +  actor.id;
+        peliculaElem.appendChild(idActor);
+
+        let nombreActor = document.createElement("p");
+        nombreActor.innerText ="Nombre de Actor: " +  actor.nombre;
+        peliculaElem.appendChild(nombreActor);
+
+        let apellidosActor = document.createElement("p");
+        apellidosActor.innerText ="Version Idioma: " +  actor.apellidos;
+        peliculaElem.appendChild(apellidosActor);
+
+            if(pelicula.tipo="pelicula"){
+
+                let disponibleHasta = document.createElement("p");
+                disponibleHasta.innerText ="Disponible Hasta: " +  pelicula.disponibleHasta;
+                peliculaElem.appendChild(disponibleHasta);
+
+            }else if(pelicula.tipo="capitulo"){
+
+                let disponibleDesde = document.createElement("p");
+                disponibleDesde.innerText ="Disponible Desde: " +  pelicula.disponibleDesde;
+                peliculaElem.appendChild(disponibleDesde);
+
+                let idSerie = document.createElement("p");
+                idSerie.innerText ="Id De La Serie: " +  pelicula.idSerie;
+                peliculaElem.appendChild(idSerie);
+
+                let serie = document.createElement("p");
+                serie.innerText ="Nombre De La Serie: " +  pelicula.serie;
+                peliculaElem.appendChild(serie);
+
+                let temporada = document.createElement("p");
+                temporada.innerText ="Número De La Temporada: " +  pelicula.temporada;
+                peliculaElem.appendChild(temporada);
+
+            }
+        let botonEditar = document.createElement("a");
+        botonEditar.className = "button";
+        botonEditar.innerText = "Editar";
+        botonEditar.href = "Actualizar_Pelicula.html?id=" + pelicula.id;
+        peliculaElem.appendChild(botonEditar);
+
+        let botonEliminar = document.createElement("button");
+        botonEliminar.className = "button";
+        botonEliminar.innerText = "Eliminar";
+        botonEliminar.onclick = function() {
+            deletepelicula(pelicula.id);
+
+
+        };
+        peliculaElem.appendChild(botonEliminar);
+
+        return peliculaElem;
+}
+
+
+
 
 function getClienteId(){
     let inputId=document.getElementById("id");
@@ -26,7 +195,7 @@ fetch(ipUrl+`/api/usuario/${inputId.value}`)
                        contenedor.innerHTML="";
            
                                
-                       let clienteElem = renderCliente(cliente);
+                       let clienteElem = renderPelicula(cliente);
                    
                            contenedor.appendChild(clienteElem);
            
@@ -48,7 +217,7 @@ function getClientes(){
  
     clientes.forEach(cliente=>{
     
-        let clienteElem = renderCliente(cliente);
+        let clienteElem = renderPelicula(cliente);
 
         contenedor.appendChild(clienteElem);
         
@@ -62,7 +231,7 @@ function renderCliente(cliente) {
         clienteElem.className = "card-panel fill-horizontal";
 
         let id = document.createElement("h3");
-        id.innerText = cliente.id;
+        id.innerText = "Id: "+cliente.id;
         clienteElem.appendChild(id);
 
         let nombre = document.createElement("p");
@@ -105,6 +274,8 @@ function renderCliente(cliente) {
 
         return clienteElem;
 }
+
+
 
 function getClienteIdUpdate(id){
 let cliente;
