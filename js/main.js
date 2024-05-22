@@ -10,7 +10,7 @@ function getPelicula(id){
 }
 
 function getPeliculaId(){
-    let inputId=document.getElementById("id");
+    let inputId=document.getElementById("id_ca");
     if(inputId.value.length == 0) {
         getPeliculas();
         return;
@@ -59,11 +59,11 @@ function getPeliculas(){
 }
 
 
-function renderPelicula(pelicula,actor) {
+function renderPelicula(pelicula) {
     let peliculaElem = document.createElement("div");
         peliculaElem.className = "card-panel fill-horizontal";
 
-        let id = document.createElement("h3");
+        let id = document.createElement("p");
         id.innerText = "Id: "+pelicula.id;
         peliculaElem.appendChild(id);
 
@@ -71,7 +71,7 @@ function renderPelicula(pelicula,actor) {
         tipo.innerText = "Tipo: " + pelicula.tipo;
         peliculaElem.appendChild(tipo);
 
-        let titulo = document.createElement("p");
+        let titulo = document.createElement("h3");
         titulo.innerText = "Titulo: " +  pelicula.titulo;
         peliculaElem.appendChild(titulo);
 
@@ -80,7 +80,7 @@ function renderPelicula(pelicula,actor) {
         peliculaElem.appendChild(descripcion);
 
         let genero = document.createElement("p");
-        genero.innerText = "Genero: "+ intToDate(pelicula.genero).toLocaleDateString();
+        genero.innerText = "Genero: "+pelicula.genero;
         peliculaElem.appendChild(genero);
 
         let duracion = document.createElement("p");
@@ -100,44 +100,38 @@ function renderPelicula(pelicula,actor) {
         peliculaElem.appendChild(valoracionMedia);
 
         let idTarifa = document.createElement("p");
-        codigoPostal.innerText ="idTarifa: " +  pelicula.idTarifa;
+        idTarifa.innerText ="idTarifa: " +  pelicula.idTarifa;
         peliculaElem.appendChild(idTarifa);
 
         let imagen_url = document.createElement("p");
-        codigoPostal.innerText ="Imagen Url: " +  pelicula.imagen_url;
+        imagen_url.innerText ="Imagen Url: " +  pelicula.imagen_url;
         peliculaElem.appendChild(imagen_url);
 
         let precio = document.createElement("p");
-        precio.innerText ="Precio: " +  pelicula.precio;
+        precio.innerText ="Precio: " +  pelicula.precio/100+"€";
         peliculaElem.appendChild(precio);
 
         let precioConTarifa = document.createElement("p");
-        precioConTarifa.innerText ="Precio Con Tarifa: " +  pelicula.precioConTarifa;
+        precioConTarifa.innerText ="Precio Con Tarifa: " +  pelicula.precioConTarifa/100+"€";
         peliculaElem.appendChild(precioConTarifa);
 
         let versionIdioma = document.createElement("p");
         versionIdioma.innerText ="Version Idioma: " +  pelicula.versionIdioma;
         peliculaElem.appendChild(versionIdioma);
 
-        let idActor = document.createElement("p");
-        idActor.innerText ="Id De Actor: " +  actor.id;
-        peliculaElem.appendChild(idActor);
+        if(pelicula.actores && pelicula.actores.length > 0) {
+            let idActor = document.createElement("p");
+            idActor.innerText ="Actores: " +  pelicula.actores.map(actor => "(" + actor.dni + ") " + actor.nombre + " " + actor.apellidos).join(", ");
+            peliculaElem.appendChild(idActor);
+        }
 
-        let nombreActor = document.createElement("p");
-        nombreActor.innerText ="Nombre de Actor: " +  actor.nombre;
-        peliculaElem.appendChild(nombreActor);
-
-        let apellidosActor = document.createElement("p");
-        apellidosActor.innerText ="Version Idioma: " +  actor.apellidos;
-        peliculaElem.appendChild(apellidosActor);
-
-            if(pelicula.tipo="pelicula"){
+            if(pelicula.tipo=="pelicula"){
 
                 let disponibleHasta = document.createElement("p");
                 disponibleHasta.innerText ="Disponible Hasta: " +  pelicula.disponibleHasta;
                 peliculaElem.appendChild(disponibleHasta);
 
-            }else if(pelicula.tipo="capitulo"){
+            }else if(pelicula.tipo=="capitulo"){
 
                 let disponibleDesde = document.createElement("p");
                 disponibleDesde.innerText ="Disponible Desde: " +  pelicula.disponibleDesde;
@@ -195,7 +189,7 @@ fetch(ipUrl+`/api/usuario/${inputId.value}`)
                        contenedor.innerHTML="";
            
                                
-                       let clienteElem = renderPelicula(cliente);
+                       let clienteElem = renderCliente(cliente);
                    
                            contenedor.appendChild(clienteElem);
            
@@ -217,7 +211,7 @@ function getClientes(){
  
     clientes.forEach(cliente=>{
     
-        let clienteElem = renderPelicula(cliente);
+        let clienteElem = renderCliente(cliente);
 
         contenedor.appendChild(clienteElem);
         
@@ -230,11 +224,11 @@ function renderCliente(cliente) {
     let clienteElem = document.createElement("div");
         clienteElem.className = "card-panel fill-horizontal";
 
-        let id = document.createElement("h3");
+        let id = document.createElement("p");
         id.innerText = "Id: "+cliente.id;
         clienteElem.appendChild(id);
 
-        let nombre = document.createElement("p");
+        let nombre = document.createElement("h3");
         nombre.innerText = "Nombre: " + cliente.nombre;
         clienteElem.appendChild(nombre);
 
@@ -332,7 +326,7 @@ function addCliente(){
         nombre:document.getElementById("nombre").value,
         apellidos:document.getElementById("apellidos").value,
         email:document.getElementById("email").value,
-        fechaNacimiento:date.intToDate(document.getElementById("fechaNacimiento").value),
+        fechaNacimiento:intToDate(document.getElementById("fechaNacimiento").value),
         contrasenya:document.getElementById("contrasenya").value,
         domicilio:document.getElementById("domicilio").value,
         codigoPostal:document.getElementById("codigoPostal").value
@@ -350,8 +344,57 @@ function addCliente(){
         
     
 }
+function expandir_formulario(){
+    let tipo = document.getElementById("tipo");
+    document.getElementById("parte_pelicula").style.display = "none";
+    document.getElementById("parte_capitulo").style.display = "none";
+
+    if (tipo.value=="pelicula"){
+       document.getElementById("parte_pelicula").style.display = "block";
+    }else if(tipo.value=="capitulo"){
+        document.getElementById("parte_capitulo").style.display = "block";
+    }
+    }
+    
 
 
+function addPelicula(){
+    /*
+     let idActores=[];
+     idActores=document.getElementById("id_actores").split(document.getElementById("idTarifa").values.length())
+   console.log(idActores);
+   */
+        let  pelicula={
+            tipo:document.getElementById("tipo").value,
+            titulo:document.getElementById("titulo").value,
+            descripcion:document.getElementById("descripcion").value,
+            genero:document.getElementById("genero").value,
+            duracion:Number(document.getElementById("duracion").value),
+            fechaEstreno:dateToInt(document.getElementById("fecha_estreno").value),
+            nombreDirector:document.getElementById("nombre_director").value,
+            idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
+            idTarifa:Number(document.getElementById("id_tarifa").value),
+            precio:Number(document.getElementById("precio").value),
+            versionIdioma:document.getElementById("version_Idioma").value,
+            //Hacer split para que me pase id de actores separados por coma
+            disponibleHasta:dateToInt(document.getElementById("disponibleHasta").value),
+            disponibleDesde:dateToInt(document.getElementById("disponibleDesde").value),
+            idSerie:Number(document.getElementById("idSerie").value),
+            temporada:Number(document.getElementById("temporada").value)
+      };
+  
+      fetch(ipUrl+`/api/pelicula/`,{ method: "POST",
+              body: JSON.stringify(pelicula),
+  
+              headers: {
+                  'Content-type': 'application/json; charset=UTF-8'
+                },})
+      .then((res)=>res.json())
+      .then((data)=>{
+          data;})
+          
+      
+  }
 
 function updateCliente(){
     
@@ -377,21 +420,7 @@ function updateCliente(){
                 headers: {   'Content-type': 'application/json; charset=UTF-8'}
             }
   
-  /*
-    for (i = 0; i < usuarios.length; i++) {
-    cliente={
-      nombre:document.getElementById("nombre").value,
-      usuarios[i].getElementsByTagName("username")[0].textContent=user_introducido;
   
-      apellidos:document.getElementById("apellidos").value,
-      email:document.getElementById("email").value,
-      fechaNacimiento:date.intToDate(document.getElementById("fechaNacimiento").value),
-      contrasenya:document.getElementById("contrasenya").value,
-      domicilio:document.getElementById("domicilio").value,
-      codigoPostal:document.getElementById("codigoPostal").value
-          }
-      }),
-      */
         fetch(ipUrl+`/api/usuario/`,options)
         .then(res => {
             if(res.ok)
@@ -399,21 +428,7 @@ function updateCliente(){
             else
                 res.json().then(json => alert(json.message));
         })
-  /*
-        clientes.forEach(cliente=>{
   
-            if(cliente.id==document.getElementById("nombre").value){
-                 nombreViejo=cliente.nombre;
-                 apellidosViejo=cliente.apellidos;
-                 emailViejo=cliente.email;
-                 fechaNacimientoViejo=cliente.fechaNacimiento;
-                 contrasenyaViejo=cliente.contrasenya;
-                 domicilioViejo=cliente.domicilio;
-                 codigoPostalViejo=cliente.codigoPostal;
-               
-     
-            }
-            */
           
   }
   
@@ -437,7 +452,6 @@ function login() {
     setCredentials(email.value, password.value);
 }
 
-// https://stackoverflow.com/a/24103596
 function setCookie(name, value, days) {
     let expires = "";
     if(days) {
@@ -448,7 +462,6 @@ function setCookie(name, value, days) {
     document.cookie = name + "=" + btoa(value || "")  + expires + "; path=/";
 }
 
-// https://stackoverflow.com/a/24103596
 function getCookie(name) {
     let nameEQ = name + "=";
     let ca = document.cookie.split(';');

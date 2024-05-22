@@ -2,9 +2,10 @@ let obtenerUsuario=document.getElementById("obtener_usuario");
 
 obtenerUsuario.addEventListener("submit", event => {
     event.preventDefault();
-    getCliente();
+
+   getClientes(); 
 });
 
-getClientes();
+
 
 

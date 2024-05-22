@@ -1,10 +1,11 @@
-let obtenerUsuario=document.getElementById("obtener_usuario");
+let obtenerUsuario=document.getElementById("obtener_pelicula");
 
 obtenerUsuario.addEventListener("submit", event => {
     event.preventDefault();
-    getPelicula();
+  
+    getPeliculas();
 });
-getPeliculas();
+
 
 
 
