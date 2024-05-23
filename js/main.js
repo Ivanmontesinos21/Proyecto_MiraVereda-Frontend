@@ -358,13 +358,13 @@ fetch(ipUrl+`/api/usuario/${id}`, {
  function deletePelicula(id){
    
 
-    let cliente;
-    fetch(ipUrl+`/api/usuario/${id}`, {
+    let pelicula;
+    fetch(ipUrl+`/api/pelicula/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(cliente)
+        body: JSON.stringify(pelicula)
     })
     .then(response => {
         return response.json( )
@@ -403,6 +403,7 @@ function addCliente(){
 }
 function expandir_formulario(){
     let tipo = document.getElementById("tipo");
+
     document.getElementById("parte_pelicula").style.display = "none";
     document.getElementById("parte_capitulo").style.display = "none";
 
@@ -411,8 +412,39 @@ function expandir_formulario(){
     }else if(tipo.value=="capitulo"){
         document.getElementById("parte_capitulo").style.display = "block";
     }
+
+   
+
     }
-    
+    function expandir_formulario2(){
+
+        let idPelicula=document.getElementById("id");
+        let tipo2;
+     let pelicula;
+     fetch(ipUrl+`/api/usuario/${idPelicula.value}`)
+                 .then(res => {
+                     if(res.ok) {
+                         res.json().then(data=>{
+                             pelicula=data;
+                          
+                             tipo2.innerText = pelicula.tipo;
+     
+                            });
+                      }
+                      else {
+                          res.text().then(err => alert(err));
+                      }
+                 })
+
+                 if(tipo2.value=="pelicula"){
+                    document.getElementById("parte_pelicula").style.display = "block";
+            
+                }else if(tipo2.value=="capitulo"){
+                    document.getElementById("parte_capitulo").style.display = "block";
+                }
+            
+     
+    }
 
 
 function addPelicula(){
@@ -453,14 +485,14 @@ function updateCliente(){
 
     
     const newUser={
-            id:document.getElementById("id").value,          
-            nombre:document.getElementById("nombre").value,          
-            apellidos:document.getElementById("apellidos").value,
-            email:document.getElementById("email").value,
-            fechaNacimiento:dateToInt(document.getElementById("fechaNacimiento").value),
-            contrasenya:document.getElementById("contrasenya").value,
-            domicilio:document.getElementById("domicilio").value,
-            codigoPostal:document.getElementById("codigoPostal").value
+        id:document.getElementById("id").value,          
+        nombre:document.getElementById("nombre").value,          
+        apellidos:document.getElementById("apellidos").value,
+        email:document.getElementById("email").value,
+        fechaNacimiento:dateToInt(document.getElementById("fechaNacimiento").value),
+        contrasenya:document.getElementById("contrasenya").value,
+        domicilio:document.getElementById("domicilio").value,
+        codigoPostal:document.getElementById("codigoPostal").value
             };
             const options={
                 method: "PUT",
@@ -485,14 +517,24 @@ function updateCliente(){
 
     
     const newPelicula={
-            id:document.getElementById("id").value,          
-            nombre:document.getElementById("nombre").value,          
-            apellidos:document.getElementById("apellidos").value,
-            email:document.getElementById("email").value,
-            fechaNacimiento:dateToInt(document.getElementById("fechaNacimiento").value),
-            contrasenya:document.getElementById("contrasenya").value,
-            domicilio:document.getElementById("domicilio").value,
-            codigoPostal:document.getElementById("codigoPostal").value
+
+        id:document.getElementById("id").value,          
+        titulo:document.getElementById("titulo").value,
+        descripcion:document.getElementById("descripcion").value,
+        genero:document.getElementById("genero").value,
+        duracion:document.getElementById("duracion").value,
+        fechaEstreno:document.getElementById("fecha_estreno").value,
+        nombreDirector:document.getElementById("nombre_director").value,
+        idTarifa:document.getElementById("id_tarifa").value,          
+        precio:document.getElementById("precio").value,          
+        versionIdioma:document.getElementById("version_Idioma").value,
+        idActores:document.getElementById("id_actores").value,
+        disponibleHasta:dateToInt(document.getElementById("disponibleHasta").value),
+        disponibleDesde:document.getElementById("disponibleDesde").value,
+        idSerie:document.getElementById("idSerie").value,
+        temporada:document.getElementById("temporada").value
+
+   
             };
             const options={
                 method: "PUT",
@@ -501,7 +543,7 @@ function updateCliente(){
             }
   
   
-        fetch(ipUrl+`/api/usuario/`,options)
+        fetch(ipUrl+`/api/pelicula/`,options)
         .then(res => {
             if(res.ok)
                 alert("Se ha modificado el usuario con exito");
