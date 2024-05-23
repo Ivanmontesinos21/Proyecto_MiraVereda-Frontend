@@ -1,23 +1,28 @@
+<?php
+session_start(); //indicamos que vamos a usar sesiones
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
 
-    <title>Actualizar Pelicula</title>
-</head>
-<body>
+    <title>Crear Pelicula</title>
+    </head>
+    <body>
     <div align="center">
         <div align="left" class="thin-page-500px">
-        <h2>Actualizar Pelicula</h2>
-        <form action="" method="put" id="modificar_pelicula">
+        <h2>Crear Pelicula</h2>
+        <form action="" method="post" id="crear_pelicula">
 
-           
-            <input type="text" id="tipo" name="tipo" hidden><br>
+            <label for="tipo">Tipo:</label>
+                <select name="tipo" id="tipo" onchange="expandir_formulario()">
+                <option value="pelicula">Pelicula</option>
+                <option value="capitulo">Capitulo</option>
+                <option value="corto">Corto</option>
 
-
-                <label for="id">ID de Usuario:</label>
-                <input type="number" id="id" name="id" required><br>
+                </select>
             
                 <label for="titulo">titulo:</label>
                 <input type="text" id="titulo" name="titulo" required><br>
@@ -47,7 +52,7 @@
                 <select name="version_Idioma" id="version_Idioma">
                     
                     <option value="V.E">versión española</option>
-                    <option value="V.O.S.E">
+                    <option value="V.o.S.E">
                         versión española original subtitulada
                     </option>
                     </select>
@@ -79,11 +84,12 @@
                 </div>
             
                 <input type="submit" class="button accent" value="Crear Pelicula">
-        </form>    </div>
-</div>
+        </form>
 
-<script src="/js/main.js"></script>
-<script src="/js/modificarPelicula.js"></script>
 
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+    <script src="/js/crearPeliculas.js"></script>
 </body>
 </html>

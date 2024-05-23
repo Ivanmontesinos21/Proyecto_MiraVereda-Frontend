@@ -1,3 +1,7 @@
+<?php
+session_start(); //indicamos que vamos a usar sesiones
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
