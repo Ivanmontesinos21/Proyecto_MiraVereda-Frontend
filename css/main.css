@@ -34,6 +34,7 @@ input[type="password"],
 input[type="email"],
 input[type="url"],
 input[type="number"],
+input[type="date"],
 textarea,
 select {
 	box-sizing: border-box;
@@ -54,6 +55,7 @@ input[type="password"]:focus,
 input[type="email"]:focus,
 input[type="url"]:focus,
 input[type="number"]:focus,
+input[type="date"]:focus,
 textarea:focus {
 	background-color: var(--secondary);
 }
@@ -63,6 +65,7 @@ form input[type="password"],
 form input[type="email"],
 form input[type="url"],
 form input[type="number"],
+form input[type="date"],
 form textarea,
 form select {
 	width: 100%;

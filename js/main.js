@@ -1,13 +1,9 @@
+
 const ipUrl = "http://localhost:8080";
-
-function getPelicula(id){
-   fetch(ipUrl+`/api/pelicula/${id}`)
-   .then((res)=>res.json())
-   .then((data)=>{
-    console.log(data);
-
-   })
-}
+/*
+Método get que se encarga de mostrar una pelicula por su id
+y si no tiene id llama a getPeliculas()
+*/
 
 function getPeliculaId(){
     let inputId=document.getElementById("id_ca");
@@ -15,29 +11,31 @@ function getPeliculaId(){
         getPeliculas();
         return;
     }
-let pelicula;
-fetch(ipUrl+`/api/pelicula/${inputId.value}`)
-            .then(res => {
-                if(res.ok) {
-                    res.json().then(data=>{
-                        pelicula=data; 
-                      
-                       let contenedor=document.getElementById("peliculas");
-                       contenedor.innerHTML="";
-           
-                               
-                       let peliculaElem = renderPelicula(pelicula,pelicula.actores);
-                   
-                           contenedor.appendChild(peliculaElem);
-           
-                      });
-                }
-                else {
-                    res.text().then(err => alert(err));
-                }
-            })
+    let pelicula;
+    fetch(ipUrl+`/api/pelicula/${inputId.value}`)
+        .then(res => {
+            if(res.ok) {
+                res.json().then(data=>{
+                    pelicula=data; 
+                
+                let contenedor=document.getElementById("peliculas");
+                contenedor.innerHTML="";
+    
+                        
+                let peliculaElem = renderPelicula(pelicula,pelicula.actores);
+            
+                    contenedor.appendChild(peliculaElem);
+    
+                });
+            }else {
+                res.text().then(err => alert(err));
+            }
+    })
 }
 
+/*
+Método get que se encarga de mostrar todas las peliculas
+*/
 
 function getPeliculas(){
     fetch(ipUrl+`/api/pelicula/`)
@@ -57,6 +55,11 @@ function getPeliculas(){
 
     })
 }
+
+/*
+Método que se encarga de mostrar la información de la pelicula
+en etiquetas de html
+*/
 
 
 function renderPelicula(pelicula) {
@@ -84,7 +87,7 @@ function renderPelicula(pelicula) {
         peliculaElem.appendChild(genero);
 
         let duracion = document.createElement("p");
-        duracion.innerText = "Duración: " +  pelicula.duracion;
+        duracion.innerText = "Duración: " +  segToDuracion(pelicula.duracion);
         peliculaElem.appendChild(duracion);
 
         let fechaEstreno = document.createElement("p");
@@ -118,13 +121,25 @@ function renderPelicula(pelicula) {
         let versionIdioma = document.createElement("p");
         versionIdioma.innerText ="Version Idioma: " +  pelicula.versionIdioma;
         peliculaElem.appendChild(versionIdioma);
+            /*
 
+            Al ser un array de actores debemos hacer una funcion lambda para imprimir
+            todos los id de actores y separarlos por comas
+
+            */
         if(pelicula.actores && pelicula.actores.length > 0) {
             let idActor = document.createElement("p");
+
+        
             idActor.innerText ="Actores: " +  pelicula.actores.map(actor => "(" + actor.dni + ") " + actor.nombre + " " + actor.apellidos).join(", ");
             peliculaElem.appendChild(idActor);
         }
 
+            /*
+
+            Dependiendo del tipo de contenido audiovisual muestra una información u otra
+
+            */
             if(pelicula.tipo=="pelicula"){
 
                 let disponibleHasta = document.createElement("p");
@@ -150,15 +165,19 @@ function renderPelicula(pelicula) {
                 peliculaElem.appendChild(temporada);
 
             }
+
         let botonEditar = document.createElement("a");
+
         botonEditar.className = "button";
         botonEditar.innerText = "Editar";
-        botonEditar.href = "Actualizar_Pelicula.html?id=" + pelicula.id;
+        botonEditar.href = "../CrudPeliFormu/ActualizarPelicula.php?id=" + pelicula.id;
         peliculaElem.appendChild(botonEditar);
 
         let botonEliminar = document.createElement("button");
+
         botonEliminar.className = "button";
         botonEliminar.innerText = "Eliminar";
+
         botonEliminar.onclick = function() {
             deletePelicula(pelicula.id);
 
@@ -170,7 +189,10 @@ function renderPelicula(pelicula) {
 }
 
 
-
+/*
+Método get que se encarga de mostrar un cliente por su id
+y si no tiene id llama a getPeliculas()
+*/
 
 function getClienteId(){
     let inputId=document.getElementById("id");
@@ -178,8 +200,10 @@ function getClienteId(){
         getClientes();
         return;
     }
-let cliente;
-fetch(ipUrl+`/api/usuario/${inputId.value}`)
+
+    let cliente;
+
+    fetch(ipUrl+`/api/usuario/${inputId.value}`)
             .then(res => {
                 if(res.ok) {
                     res.json().then(data=>{
@@ -188,7 +212,6 @@ fetch(ipUrl+`/api/usuario/${inputId.value}`)
                        let contenedor=document.getElementById("usuarios");
                        contenedor.innerHTML="";
            
-                               
                        let clienteElem = renderCliente(cliente);
                    
                            contenedor.appendChild(clienteElem);
@@ -200,6 +223,10 @@ fetch(ipUrl+`/api/usuario/${inputId.value}`)
                 }
             })
 }
+
+/*
+Método get que se encarga de mostrar todos los usuarios
+*/
 
 function getClientes(){
     fetch(ipUrl+`/api/usuario/`)
@@ -219,14 +246,13 @@ function getClientes(){
 
     })
 }
-
+/*
+Método que se encarga de mostrar la información del cliente
+en etiquetas de html
+*/
 function renderCliente(cliente) {
-    let clienteElem = document.createElement("div");
+        let clienteElem = document.createElement("div");
         clienteElem.className = "card-panel fill-horizontal";
-
-        let id = document.createElement("p");
-        id.innerText = "Id: "+cliente.id;
-        clienteElem.appendChild(id);
 
         let nombre = document.createElement("h3");
         nombre.innerText = "Nombre: " + cliente.nombre;
@@ -235,6 +261,10 @@ function renderCliente(cliente) {
         let apellidos = document.createElement("p");
         apellidos.innerText = "Apellidos: " +  cliente.apellidos;
         clienteElem.appendChild(apellidos);
+
+        let id = document.createElement("p");
+        id.innerText = "Id: "+cliente.id;
+        clienteElem.appendChild(id);
 
         let email = document.createElement("p");
         email.innerText = "Email: " + cliente.email;
@@ -255,7 +285,7 @@ function renderCliente(cliente) {
         let botonEditar = document.createElement("a");
         botonEditar.className = "button";
         botonEditar.innerText = "Editar";
-        botonEditar.href = "Actualizar_Usuario.html?id=" + cliente.id;
+        botonEditar.href = "Actualizar_Usuario.php?id=" + cliente.id;
         clienteElem.appendChild(botonEditar);
 
         let botonEliminar = document.createElement("button");
@@ -270,7 +300,9 @@ function renderCliente(cliente) {
 }
 
 
-
+/*
+Rellena los campos,a través de su id, cuando se qeuiera modificar un cliente
+*/
 function getClienteIdUpdate(id){
 let cliente;
 fetch(ipUrl+`/api/usuario/${id}`)
@@ -296,7 +328,9 @@ fetch(ipUrl+`/api/usuario/${id}`)
             })
 }
     
-
+/*
+Rellena los campos,a través de su id, cuando se qeuiera modificar una pelicula
+*/
 
 function getPeliculaIdUpdate(id){
     let pelicula;
@@ -317,16 +351,12 @@ function getPeliculaIdUpdate(id){
                             document.getElementById("id_actores").value=pelicula.actores.map(actor=>actor.dni);  
                             document.getElementById("id_tarifa").value=pelicula.idTarifa;
                             document.getElementById("precio").value=pelicula.precio;
+                        //Con version_Idioma no funcionab bien lo de rellenar el campo 
                             document.getElementById("version_Idioma").value;
-                           // document.getElementById("version_Idioma").value=pelicula.versionIdioma.options[versionIdioma.selectedIndex].text;
-                          //  alert(pelicula.versionIdioma.options[versionIdioma.selectedIndex].text);
                             document.getElementById("disponibleHasta").valueAsDate=intToDate(pelicula.disponibleHasta);
                             document.getElementById("disponibleDesde").valueAsDate=intToDate(pelicula.disponibleDesde);
                             document.getElementById("idSerie").value=pelicula.idSerie;
                             document.getElementById("temporada").value=pelicula.temporada;
-    
-                           // idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
-
           
                           });
                     }
@@ -337,8 +367,8 @@ function getPeliculaIdUpdate(id){
                     console.log(pelicula);
     }
 
-    
- function deleteCliente(id){
+//Este método borra el cliente a tarvés del id
+function deleteCliente(id){
    
 
 let cliente;
@@ -360,7 +390,8 @@ fetch(ipUrl+`/api/usuario/${id}`, {
 
  }
 
- function deletePelicula(id){
+//Este método borra el cliente a tarvés del id
+function deletePelicula(id){
    
 
     let pelicula;
@@ -382,6 +413,7 @@ fetch(ipUrl+`/api/usuario/${id}`, {
     
      }
 
+//Este método anyade el cliente a tarvés del id
 function addCliente(){
   
   let  cliente={
@@ -400,30 +432,19 @@ function addCliente(){
             headers: {
                 'Content-type': 'application/json; charset=UTF-8'
               },})
-    .then((res)=>res.json())
-    .then((data)=>{
-        data;})
+    .then(res => {
+        if(res.ok)
+            alert("Se ha creado el usuario con exito");
+        else
+            res.json().then(json => alert(json.message));
+    })
+
         
     
 }
 
-
-function expandir_formulario(){
-    let tipo = document.getElementById("tipo");
-
-    document.getElementById("parte_pelicula").style.display = "none";
-    document.getElementById("parte_capitulo").style.display = "none";
-
-    if (tipo.value=="pelicula"){
-       document.getElementById("parte_pelicula").style.display = "block";
-    }else if(tipo.value=="capitulo"){
-        document.getElementById("parte_capitulo").style.display = "block";
-    }
-
-   
-
-    }
     
+//Este método anyade la pelicula a tarvés del id
 
 function addPelicula(){
 
@@ -462,9 +483,9 @@ function addPelicula(){
       
   }
 
+//Este método actualiza el cliente a tarvés del id
 function updateCliente(){
 
-    
     const newUser={
         id:document.getElementById("id").value,          
         nombre:document.getElementById("nombre").value,          
@@ -493,10 +514,9 @@ function updateCliente(){
           
   }
   
-
+//Este método actualiza la pelicula a tarvés del id
   function updatePelicula(){
 
-    
     const newPelicula={
 
         id:document.getElementById("id").value,          
@@ -535,9 +555,22 @@ function updateCliente(){
           
   }
 
-  
-  
+  //Oculta partes del formulario según el tipo de contenido visual
+function expandir_formulario(){
+    let tipo = document.getElementById("tipo");
 
+    document.getElementById("parte_pelicula").style.display = "none";
+    document.getElementById("parte_capitulo").style.display = "none";
+
+    if (tipo.value=="pelicula"){
+       document.getElementById("parte_pelicula").style.display = "block";
+    }else if(tipo.value=="capitulo"){
+        document.getElementById("parte_capitulo").style.display = "block";
+    }
+
+    }
+
+//Guarda los datos del usuario registrado
 function setCredentials(email, password) {
     setCookie("email", email, 14);
     setCookie("password", password, 14);
@@ -557,6 +590,7 @@ function login() {
     setCredentials(email.value, password.value);
 }
 
+//Crea las cookies
 function setCookie(name, value, days) {
     let expires = "";
     if(days) {
@@ -580,19 +614,22 @@ function getCookie(name) {
     return null;
 }
 
-// https://stackoverflow.com/a/24103596
+
 function eraseCookie(name) {   
     document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 
+//Para volver un int(Formato unix timeStamp) a date
 function intToDate(int) {
     return new Date(int * 1000);
 }
 
+//Para volver un date a int
 function dateToInt(date) {
     return new Date(date).getTime() / 1000;
 }
 
+//Pasa de segundo a un string que representa una duracion
 function segToDuracion(seconds, max = -1) {
 	let times = [
 		[31536000, "año"],

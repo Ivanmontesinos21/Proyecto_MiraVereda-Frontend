@@ -2,13 +2,13 @@
 <html lang="es">
     <head>
         <meta charset="UTF-8"/>
-        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="../css/main.css">
     </head>
     <body>
         <div align="center">
             <div align="left" class="thin-page-500px">
                 <h1>Iniciar sesión</h1>
-                <form id="login-form">
+                <form id="login-form" method="post" action="login-check.php">
                     <label for="email" class="textbox-label">Email</label>
                     <input type="email" name="email" id="email" autocomplete="email" autofocus required>
                     <label for="contrasenya" class="textbox-label">Contraseña</label>
@@ -17,17 +17,9 @@
                         <input type="submit" class="button accent" value="Iniciar sesión">
                     </div>
                 </form>
-                        <a href="/CrudUserFormu/Crear_usuarios.html">Crear Usuario</a>
-                        <a href="/CrudUserFormu/ObtenerUsuarios.html">Usuarios</a>
-                        <br><br>
-                        <a href="/CrudPeliFormu/Crear_pelicula.html">Crear Pelicula</a>
-                        <a href="/CrudPeliFormu/ObtenerPelicula.html">Cátalogo</a>
-
-
                     </div>
         </div>
-        <script src="/js/main.js"></script>
-        <script src="/js/login.js"></script>
+        <script src="../js/main.js"></script>
 
     </body>
 </html>
