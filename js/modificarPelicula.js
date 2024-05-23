@@ -5,10 +5,11 @@ let id = params.get("id");
 if(id != null) {
     document.getElementById("id").value=id;
     getPeliculaIdUpdate(id);
+      expandir_formulario();
 }
 
 modificarPelicula.addEventListener("submit", event => {
-    alert(2);
     event.preventDefault();
     updatePelicula();
+  
 });

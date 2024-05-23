@@ -305,31 +305,36 @@ function getPeliculaIdUpdate(id){
                     if(res.ok) {
                         res.json().then(data=>{
                             pelicula=data; 
-                       
+                            document.getElementById("tipo").value=pelicula.tipo;
+
                             document.getElementById("id").value=pelicula.id;
                             document.getElementById("titulo").value=pelicula.titulo;
                             document.getElementById("descripcion").value=pelicula.descripcion;
                             document.getElementById("genero").value=pelicula.genero;
                             document.getElementById("duracion").value=pelicula.duracion;
-                            document.getElementById("fecha_estreno").valueAsDate=intToDate(pelicula.codigoPostal);
-                            document.getElementById("nombre_director").value=pelicula.nombre_director;
-                            document.getElementById("id_actores").value=pelicula.id_actores;
-                            document.getElementById("id_tarifa").value=pelicula.id_tarifa;
+                            document.getElementById("fecha_estreno").valueAsDate=intToDate(pelicula.fechaEstreno);
+                            document.getElementById("nombre_director").value=pelicula.nombreDirector;
+                            document.getElementById("id_actores").value=pelicula.actores.map(actor=>actor.dni);  
+                            document.getElementById("id_tarifa").value=pelicula.idTarifa;
                             document.getElementById("precio").value=pelicula.precio;
-                            document.getElementById("version_Idioma").value=pelicula.version_Idioma;
+                            document.getElementById("version_Idioma").value;
+                           // document.getElementById("version_Idioma").value=pelicula.versionIdioma.options[versionIdioma.selectedIndex].text;
+                          //  alert(pelicula.versionIdioma.options[versionIdioma.selectedIndex].text);
                             document.getElementById("disponibleHasta").valueAsDate=intToDate(pelicula.disponibleHasta);
                             document.getElementById("disponibleDesde").valueAsDate=intToDate(pelicula.disponibleDesde);
                             document.getElementById("idSerie").value=pelicula.idSerie;
                             document.getElementById("temporada").value=pelicula.temporada;
     
-                        
-               
+                           // idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
+
+          
                           });
                     }
                     else {
                         res.text().then(err => alert(err));
                     }
-                })
+                }) 
+                    console.log(pelicula);
     }
 
     
@@ -401,6 +406,8 @@ function addCliente(){
         
     
 }
+
+
 function expandir_formulario(){
     let tipo = document.getElementById("tipo");
 
@@ -416,36 +423,7 @@ function expandir_formulario(){
    
 
     }
-    function expandir_formulario2(){
-
-        let idPelicula=document.getElementById("id");
-        let tipo2;
-     let pelicula;
-     fetch(ipUrl+`/api/usuario/${idPelicula.value}`)
-                 .then(res => {
-                     if(res.ok) {
-                         res.json().then(data=>{
-                             pelicula=data;
-                          
-                             tipo2.innerText = pelicula.tipo;
-     
-                            });
-                      }
-                      else {
-                          res.text().then(err => alert(err));
-                      }
-                 })
-
-                 if(tipo2.value=="pelicula"){
-                    document.getElementById("parte_pelicula").style.display = "block";
-            
-                }else if(tipo2.value=="capitulo"){
-                    document.getElementById("parte_capitulo").style.display = "block";
-                }
-            
-     
-    }
-
+    
 
 function addPelicula(){
 
@@ -474,9 +452,12 @@ function addPelicula(){
               headers: {
                   'Content-type': 'application/json; charset=UTF-8'
                 },})
-      .then((res)=>res.json())
-      .then((data)=>{
-          data;})
+      .then(res => {
+        if(res.ok)
+            alert("Se ha CREADO el usuario con exito");
+        else
+            res.json().then(json => alert(json.message));
+    })
           
       
   }
@@ -523,14 +504,14 @@ function updateCliente(){
         descripcion:document.getElementById("descripcion").value,
         genero:document.getElementById("genero").value,
         duracion:document.getElementById("duracion").value,
-        fechaEstreno:document.getElementById("fecha_estreno").value,
+        fechaEstreno:dateToInt(document.getElementById("fecha_estreno").value),
         nombreDirector:document.getElementById("nombre_director").value,
         idTarifa:document.getElementById("id_tarifa").value,          
         precio:document.getElementById("precio").value,          
         versionIdioma:document.getElementById("version_Idioma").value,
-        idActores:document.getElementById("id_actores").value,
+        idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
         disponibleHasta:dateToInt(document.getElementById("disponibleHasta").value),
-        disponibleDesde:document.getElementById("disponibleDesde").value,
+        disponibleDesde:dateToInt(document.getElementById("disponibleDesde").value),
         idSerie:document.getElementById("idSerie").value,
         temporada:document.getElementById("temporada").value
 
