@@ -13,7 +13,7 @@ if($_SESSION['logged']) {
 </head>
     <body>
         <div align="center">
-            <div align="left" class="thin-page-500px">
+            <div align="left" class="thin-page-600px">
                     
                 <h1>Actualizar Usuario</h1>
                 <form action="" method="post" id="modificar_usuario">

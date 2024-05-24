@@ -13,7 +13,7 @@ if($_SESSION['logged']) {
     </head>
     <body>
         <div align="center">
-            <div align="left" class="thin-page-500px">
+            <div align="left" class="thin-page-600px">
                     
             <h1>Crear Película</h1>
                 <form action="" method="post" id="crear_pelicula">
@@ -68,7 +68,7 @@ if($_SESSION['logged']) {
                     </select>
                                     
                     <label for="id_actores">ID actores: </label>
-                    <input type="text" id="id_actores" name="id_actores" required><br>
+                    <input type="text" id="id_actores" name="id_actores"><br>
                     
                     <label for="imagen_url">URL de la imagen:</label>
                     <input type="text" id="imagen_url" name="imagen_url"><br>
@@ -83,13 +83,13 @@ if($_SESSION['logged']) {
                     <div id="parte_capitulo" style="display:none">
 
                         <label for="disponibleDesde">Disponible desde:</label>
-                        <input type="date" id="disponibleDesde" name="disponibleDesde" requiered><br>
+                        <input type="date" id="disponibleDesde" name="disponibleDesde"><br>
                         
                         <label for="idSerie">ID de la serie:</label>
-                        <input type="number" id="idSerie" name="idSerie" value="null" requiered><br>
+                        <input type="number" id="idSerie" name="idSerie"><br>
 
                         <label for="temporada">Temporada:</label>
-                        <input type="number" id="temporada" name="temporada" requiered>
+                        <input type="number" id="temporada" name="temporada">
 
 
                     </div>

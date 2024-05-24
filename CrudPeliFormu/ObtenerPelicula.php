@@ -13,7 +13,7 @@ if($_SESSION['logged']) {
 </head>
     <body>
         <div align="center">
-            <div align="left" class="thin-page-500px">
+            <div align="left" class="thin-page">
                 <br>
                 <a href="../login/home.php">Volver al panel de administración</a>
                     
@@ -35,7 +35,7 @@ if($_SESSION['logged']) {
                 <button class="button" onclick="getPeliculaId()">Buscar</button> 
                 <br><br>
 
-                <div id="peliculas">
+                <div id="peliculas" class="lista">
 
                 </div>
             </div>

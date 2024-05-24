@@ -13,7 +13,7 @@ if($_SESSION['logged']) {
 </head>
     <body>
         <div align="center">
-            <div align="left" class="thin-page-500px">
+            <div align="left" class="thin-page">
                     <br>
                     <a href="../login/home.php">Volver al panel de administración</a>
                     <h1>Leer Usuario</h1>
@@ -32,7 +32,7 @@ if($_SESSION['logged']) {
 
                     <button class="button" onclick="getClienteId()">Buscar</button><br><br> 
                         
-                    <div id="usuarios">
+                    <div id="usuarios" class="lista">
 
                     </div>
             </div>

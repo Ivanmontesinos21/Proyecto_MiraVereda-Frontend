@@ -1,5 +1,5 @@
 
-const ipUrl = "http://192.168.0.24:8080";
+const ipUrl = "http://172.30.198.207:8080";
 /*
 Método get que se encarga de mostrar una pelicula por su id
 y si no tiene id llama a getPeliculas()
@@ -422,7 +422,7 @@ function addCliente(){
         nombre:document.getElementById("nombre").value,
         apellidos:document.getElementById("apellidos").value,
         email:document.getElementById("email").value,
-        fechaNacimiento:intToDate(document.getElementById("fechaNacimiento").value),
+        fechaNacimiento:dateToInt(document.getElementById("fechaNacimiento").value),
         contrasenya:document.getElementById("contrasenya").value,
         domicilio:document.getElementById("domicilio").value,
         codigoPostal:document.getElementById("codigoPostal").value
@@ -451,6 +451,7 @@ function addCliente(){
 //Este método anyade la pelicula a tarvés del id
 
 function addPelicula(){
+        let actoresString = document.getElementById("id_actores").value;
 
         let  pelicula={
             tipo:document.getElementById("tipo").value,
@@ -465,7 +466,7 @@ function addPelicula(){
             versionIdioma:document.getElementById("version_Idioma").value,
             imagenUrl:document.getElementById("imagen_url").value,
             //Hacer split para que me pase id de actores separados por coma
-            idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
+            idActores:actoresString.length == 0 ? [] : actoresString.split(",").map(actor => Number(actor.trim())),
             disponibleHasta:dateToInt(document.getElementById("disponibleHasta").value),
             disponibleDesde:dateToInt(document.getElementById("disponibleDesde").value),
             idSerie:Number(document.getElementById("idSerie").value),
@@ -525,6 +526,7 @@ function updateCliente(){
   
 //Este método actualiza la pelicula a tarvés del id
   function updatePelicula(){
+    let actoresString = document.getElementById("id_actores").value;
 
     const newPelicula={
 
@@ -539,7 +541,7 @@ function updateCliente(){
         precio:document.getElementById("precio").value,          
         versionIdioma:document.getElementById("version_Idioma").value,
         imagenUrl:document.getElementById("imagen_url").value,
-        idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
+        idActores:actoresString.length == 0 ? [] : actoresString.split(",").map(actor => Number(actor.trim())),
         disponibleHasta:dateToInt(document.getElementById("disponibleHasta").value),
         disponibleDesde:dateToInt(document.getElementById("disponibleDesde").value),
         idSerie:document.getElementById("idSerie").value,

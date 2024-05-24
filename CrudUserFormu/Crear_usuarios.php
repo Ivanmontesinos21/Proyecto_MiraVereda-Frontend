@@ -13,7 +13,7 @@ if($_SESSION['logged']) {
 </head>
     <body>
         <div align="center">
-            <div align="left" class="thin-page-500px">
+            <div align="left" class="thin-page-600px">
 
                 <h1>Crear Usuario</h1>
                 <form action="" method="post" id="crear_usuario">
@@ -34,10 +34,10 @@ if($_SESSION['logged']) {
                     <input type="password" id="contrasenya" name="contrasenya" required><br>
                     
                     <label for="domicilio">Domicilio:</label>
-                    <input type="text" id="domicilio" name="domicilio" required><br>
+                    <input type="text" id="domicilio" name="domicilio"><br>
                     
                     <label for="codigoPostal">Código Postal:</label>
-                    <input type="text" id="codigoPostal" name="codigoPostal" required><br>
+                    <input type="text" id="codigoPostal" name="codigoPostal"><br>
                     
                     <input type="submit" class="button accent"  value="Crear Usuario">
                     <br><br>

@@ -8,7 +8,7 @@
     </head>
     <body>
         <div align="center">
-            <div align="left" class="thin-page-500px">
+            <div align="left" class="thin-page-600px">
                 <h1>Iniciar sesión</h1>
                 <form id="login-form" method="post" action="login-check.php">
                     <label for="email" class="textbox-label">Email</label>

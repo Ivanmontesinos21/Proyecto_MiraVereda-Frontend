@@ -163,7 +163,7 @@ select {
 }
 
 .thin-page {
-	width: 900px;
+	width: 500px;
 	max-width: 100%;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -294,7 +294,6 @@ footer {
 	box-shadow: 2px 2px 8px 0 rgba(0, 0, 0, 0.4);
 	box-sizing: border-box;
 	padding: 10px;
-	margin-bottom: 15px;
 }
 
 .card-panel > p, .card-panel > h3 {
@@ -305,4 +304,22 @@ footer {
 .card-panel > .button {
 	margin-top: 10px;
 	margin-right: 6px;
+}
+
+@media only screen and (min-width: 1200px) {
+	.thin-page {
+		width: 900px;
+	}
+
+	.lista {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		grid-gap: 12px;
+	}
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1200px) {
+	.thin-page {
+		width: 700px;
+	}
 }
