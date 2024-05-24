@@ -7,18 +7,20 @@ if($_SESSION['logged']) {
 <html lang="es">
     <head>
         <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="../css/main.css">
+        <title>Panel de administración</title>
     </head>
     <body>
         <div align="center">
             <div align="left" class="thin-page-600px">
 
-                <a href="../CrudUserFormu/Crear_usuarios.php"  class="button accent">Crear Usuario</a>
-                <a href="../CrudUserFormu/ObtenerUsuarios.php"  class="button accent">Usuarios</a>
-                <a href="../CrudPeliFormu/Crear_pelicula.php"  class="button accent">Crear Pelicula</a>
-                <a href="../CrudPeliFormu/ObtenerPelicula.php"  class="button accent">Cátalogo</a>
+                <h1>Panel de administración</h1>
 
-                <h1>PÁGINA DE BIENVENIDA</h1>
+                <a href="../CrudUserFormu/ObtenerUsuarios.php"  class="button">Administrar usuarios</a><br><br>
+                <a href="../CrudUserFormu/Crear_usuarios.php"  class="button">Crear usuario</a><br><br>
+                <a href="../CrudPeliFormu/ObtenerPelicula.php"  class="button">Gestionar películas</a><br><br>
+                <a href="../CrudPeliFormu/Crear_pelicula.php"  class="button">Crear película</a><br><br>
 
             </div>
         </div>

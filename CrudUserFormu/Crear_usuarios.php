@@ -6,6 +6,7 @@ if($_SESSION['logged']) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
 
     <title>Crear Usuario</title>
@@ -14,11 +15,7 @@ if($_SESSION['logged']) {
         <div align="center">
             <div align="left" class="thin-page-500px">
 
-                    <a href="../CrudUserFormu/ObtenerUsuarios.php"  class="button accent">Usuarios</a>
-                    <a href="../CrudPeliFormu/Crear_pelicula.php"  class="button accent">Crear Pelicula</a>
-                    <a href="../CrudPeliFormu/ObtenerPelicula.php"  class="button accent">Cátalogo</a>
-
-                <h2>Crear Usuario</h2>
+                <h1>Crear Usuario</h1>
                 <form action="" method="post" id="crear_usuario">
                     
                     <label for="nombre">Nombre:</label>
@@ -43,6 +40,7 @@ if($_SESSION['logged']) {
                     <input type="text" id="codigoPostal" name="codigoPostal" required><br>
                     
                     <input type="submit" class="button accent"  value="Crear Usuario">
+                    <br><br>
                 </form>
             </div>
         </div>

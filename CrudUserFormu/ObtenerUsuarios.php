@@ -6,7 +6,7 @@ if($_SESSION['logged']) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" type="text/css" href="../css/main.css">
 
     <title>Leer Usuario</title>
@@ -14,12 +14,9 @@ if($_SESSION['logged']) {
     <body>
         <div align="center">
             <div align="left" class="thin-page-500px">
-                    <a href="../CrudUserFormu/Crear_usuarios.php"  class="button accent">Crear Usuario</a>
-
-                    <a href="../CrudPeliFormu/Crear_pelicula.php"  class="button accent">Crear Pelicula</a>
-                    <a href="../CrudPeliFormu/ObtenerPelicula.php"  class="button accent">Cátalogo</a>
-                    
-                    <h2>Leer Usuario</h2>
+                    <br>
+                    <a href="../login/home.php">Volver al panel de administración</a>
+                    <h1>Leer Usuario</h1>
                     <form action="" method="get" id="obtener_usuario">
 
                         <label for="id">ID de Usuario:</label>

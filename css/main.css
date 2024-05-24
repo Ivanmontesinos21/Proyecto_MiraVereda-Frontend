@@ -140,6 +140,7 @@ select {
 	color: var(--text);
 	cursor: pointer;
 	border: solid 2px var(--primary);
+	font-family: arial, sans-serif;
 	transition: transform 100ms, border-color 100ms;
 }
 
@@ -164,18 +165,27 @@ select {
 .thin-page {
 	width: 900px;
 	max-width: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+	box-sizing: border-box;
 	align-content: center;
 }
 
 .thin-page-500px {
 	width: 500px;
 	max-width: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+	box-sizing: border-box;
 	align-content: center;
 }
 
 .thin-page-600px {
 	width: 600px;
 	max-width: 100%;
+	padding-left: 10px;
+	padding-right: 10px;
+	box-sizing: border-box;
 	align-content: center;
 }
 

@@ -1,5 +1,5 @@
 
-const ipUrl = "http://localhost:8080";
+const ipUrl = "http://192.168.0.24:8080";
 /*
 Método get que se encarga de mostrar una pelicula por su id
 y si no tiene id llama a getPeliculas()
@@ -66,20 +66,25 @@ function renderPelicula(pelicula) {
     let peliculaElem = document.createElement("div");
         peliculaElem.className = "card-panel fill-horizontal";
 
+        let titulo = document.createElement("h3");
+        titulo.innerText = pelicula.titulo;
+        peliculaElem.appendChild(titulo);
+
         let id = document.createElement("p");
-        id.innerText = "Id: "+pelicula.id;
+        id.innerText = "ID: "+pelicula.id;
         peliculaElem.appendChild(id);
 
         let tipo = document.createElement("p");
         tipo.innerText = "Tipo: " + pelicula.tipo;
         peliculaElem.appendChild(tipo);
 
-        let titulo = document.createElement("h3");
-        titulo.innerText = "Titulo: " +  pelicula.titulo;
-        peliculaElem.appendChild(titulo);
-
         let descripcion = document.createElement("p");
-        descripcion.innerText = "Descripción: " + pelicula.descripcion;
+        let descripcion2 = document.createElement("span");
+        descripcion2.innerText = "Descripción: ";
+        descripcion.appendChild(descripcion2);
+        let descripcion3 = document.createElement("code");
+        descripcion3.innerText = pelicula.descripcion;
+        descripcion.appendChild(descripcion3);
         peliculaElem.appendChild(descripcion);
 
         let genero = document.createElement("p");
@@ -91,7 +96,7 @@ function renderPelicula(pelicula) {
         peliculaElem.appendChild(duracion);
 
         let fechaEstreno = document.createElement("p");
-        fechaEstreno.innerText ="Fecha estreno: " +  pelicula.fechaEstreno;
+        fechaEstreno.innerText ="Fecha estreno: " +  intToDate(pelicula.fechaEstreno).toLocaleDateString();
         peliculaElem.appendChild(fechaEstreno);
 
         let nombreDirector = document.createElement("p");
@@ -99,15 +104,15 @@ function renderPelicula(pelicula) {
         peliculaElem.appendChild(nombreDirector);
 
         let valoracionMedia = document.createElement("p");
-        valoracionMedia.innerText ="Valoración media estreno: " +  pelicula.valoracionMedia;
+        valoracionMedia.innerText ="Valoración media: " +  pelicula.valoracionMedia;
         peliculaElem.appendChild(valoracionMedia);
 
         let idTarifa = document.createElement("p");
-        idTarifa.innerText ="idTarifa: " +  pelicula.idTarifa;
+        idTarifa.innerText ="ID tarifa: " +  pelicula.idTarifa;
         peliculaElem.appendChild(idTarifa);
 
         let imagen_url = document.createElement("p");
-        imagen_url.innerText ="Imagen Url: " +  pelicula.imagen_url;
+        imagen_url.innerText ="Imagen: " +  pelicula.imagenUrl;
         peliculaElem.appendChild(imagen_url);
 
         let precio = document.createElement("p");
@@ -115,11 +120,11 @@ function renderPelicula(pelicula) {
         peliculaElem.appendChild(precio);
 
         let precioConTarifa = document.createElement("p");
-        precioConTarifa.innerText ="Precio Con Tarifa: " +  pelicula.precioConTarifa/100+"€";
+        precioConTarifa.innerText ="Precio con tarifa: " +  pelicula.precioConTarifa/100+"€";
         peliculaElem.appendChild(precioConTarifa);
 
         let versionIdioma = document.createElement("p");
-        versionIdioma.innerText ="Version Idioma: " +  pelicula.versionIdioma;
+        versionIdioma.innerText ="Versión idioma: " +  pelicula.versionIdioma;
         peliculaElem.appendChild(versionIdioma);
             /*
 
@@ -143,25 +148,25 @@ function renderPelicula(pelicula) {
             if(pelicula.tipo=="pelicula"){
 
                 let disponibleHasta = document.createElement("p");
-                disponibleHasta.innerText ="Disponible Hasta: " +  pelicula.disponibleHasta;
+                disponibleHasta.innerText ="Disponible Hasta: " +  intToDate(pelicula.disponibleHasta).toLocaleDateString();
                 peliculaElem.appendChild(disponibleHasta);
 
             }else if(pelicula.tipo=="capitulo"){
 
                 let disponibleDesde = document.createElement("p");
-                disponibleDesde.innerText ="Disponible Desde: " +  pelicula.disponibleDesde;
+                disponibleDesde.innerText ="Disponible Desde: " +  intToDate(pelicula.disponibleDesde).toLocaleDateString();
                 peliculaElem.appendChild(disponibleDesde);
 
                 let idSerie = document.createElement("p");
-                idSerie.innerText ="Id De La Serie: " +  pelicula.idSerie;
+                idSerie.innerText ="ID de la serie: " +  pelicula.idSerie;
                 peliculaElem.appendChild(idSerie);
 
                 let serie = document.createElement("p");
-                serie.innerText ="Nombre De La Serie: " +  pelicula.serie;
+                serie.innerText ="Nombre de la serie: " +  pelicula.serie;
                 peliculaElem.appendChild(serie);
 
                 let temporada = document.createElement("p");
-                temporada.innerText ="Número De La Temporada: " +  pelicula.temporada;
+                temporada.innerText ="Número de la temporada: " +  pelicula.temporada;
                 peliculaElem.appendChild(temporada);
 
             }
@@ -255,15 +260,11 @@ function renderCliente(cliente) {
         clienteElem.className = "card-panel fill-horizontal";
 
         let nombre = document.createElement("h3");
-        nombre.innerText = "Nombre: " + cliente.nombre;
+        nombre.innerText = cliente.nombre + " " + cliente.apellidos;
         clienteElem.appendChild(nombre);
 
-        let apellidos = document.createElement("p");
-        apellidos.innerText = "Apellidos: " +  cliente.apellidos;
-        clienteElem.appendChild(apellidos);
-
         let id = document.createElement("p");
-        id.innerText = "Id: "+cliente.id;
+        id.innerText = "ID: "+cliente.id;
         clienteElem.appendChild(id);
 
         let email = document.createElement("p");
@@ -275,11 +276,11 @@ function renderCliente(cliente) {
         clienteElem.appendChild(fechaNacimiento);
 
         let domicilio = document.createElement("p");
-        domicilio.innerText = "Domicilio: " +  cliente.domicilio;
+        domicilio.innerText = "Domicilio: " +  (cliente.domicilio || "Vacío");
         clienteElem.appendChild(domicilio);
 
         let codigoPostal = document.createElement("p");
-        codigoPostal.innerText ="Código Postal: " +  cliente.codigoPostal;
+        codigoPostal.innerText ="Código Postal: " +  (cliente.codigoPostal || "Vacío");
         clienteElem.appendChild(codigoPostal);
 
         let botonEditar = document.createElement("a");
@@ -345,14 +346,15 @@ function getPeliculaIdUpdate(id){
                             document.getElementById("titulo").value=pelicula.titulo;
                             document.getElementById("descripcion").value=pelicula.descripcion;
                             document.getElementById("genero").value=pelicula.genero;
-                            document.getElementById("duracion").value=pelicula.duracion;
+                            document.getElementById("duracion").value=pelicula.duracion / 60;
                             document.getElementById("fecha_estreno").valueAsDate=intToDate(pelicula.fechaEstreno);
                             document.getElementById("nombre_director").value=pelicula.nombreDirector;
-                            document.getElementById("id_actores").value=pelicula.actores.map(actor=>actor.dni);  
+                            document.getElementById("id_actores").value=pelicula.actores.map(actor=>actor.dni).join(", ");  
                             document.getElementById("id_tarifa").value=pelicula.idTarifa;
                             document.getElementById("precio").value=pelicula.precio;
                         //Con version_Idioma no funcionab bien lo de rellenar el campo 
                             document.getElementById("version_Idioma").value;
+                            document.getElementById("imagen_url").value=pelicula.imagenUrl;
                             document.getElementById("disponibleHasta").valueAsDate=intToDate(pelicula.disponibleHasta);
                             document.getElementById("disponibleDesde").valueAsDate=intToDate(pelicula.disponibleDesde);
                             document.getElementById("idSerie").value=pelicula.idSerie;
@@ -433,8 +435,10 @@ function addCliente(){
                 'Content-type': 'application/json; charset=UTF-8'
               },})
     .then(res => {
-        if(res.ok)
-            alert("Se ha creado el usuario con exito");
+        if(res.ok) {
+            alert("El usuario ha sido creado con éxito");
+            location.href = "ObtenerUsuarios.php";
+        }
         else
             res.json().then(json => alert(json.message));
     })
@@ -453,14 +457,15 @@ function addPelicula(){
             titulo:document.getElementById("titulo").value,
             descripcion:document.getElementById("descripcion").value,
             genero:document.getElementById("genero").value,
-            duracion:Number(document.getElementById("duracion").value),
+            duracion:Number(document.getElementById("duracion").value * 60),
             fechaEstreno:dateToInt(document.getElementById("fecha_estreno").value),
             nombreDirector:document.getElementById("nombre_director").value,
-            idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
             idTarifa:Number(document.getElementById("id_tarifa").value),
             precio:Number(document.getElementById("precio").value),
             versionIdioma:document.getElementById("version_Idioma").value,
+            imagenUrl:document.getElementById("imagen_url").value,
             //Hacer split para que me pase id de actores separados por coma
+            idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
             disponibleHasta:dateToInt(document.getElementById("disponibleHasta").value),
             disponibleDesde:dateToInt(document.getElementById("disponibleDesde").value),
             idSerie:Number(document.getElementById("idSerie").value),
@@ -474,8 +479,10 @@ function addPelicula(){
                   'Content-type': 'application/json; charset=UTF-8'
                 },})
       .then(res => {
-        if(res.ok)
-            alert("Se ha CREADO el usuario con exito");
+        if(res.ok) {
+            alert("La película se ha creado con éxito");
+            location.href = "ObtenerPelicula.php";
+        }
         else
             res.json().then(json => alert(json.message));
     })
@@ -505,8 +512,10 @@ function updateCliente(){
   
         fetch(ipUrl+`/api/usuario/`,options)
         .then(res => {
-            if(res.ok)
-                alert("Se ha modificado el usuario con exito");
+            if(res.ok) {
+                alert("El usuario ha sido modificado con éxito");
+                location.href = "ObtenerUsuarios.php";
+            }
             else
                 res.json().then(json => alert(json.message));
         })
@@ -523,12 +532,13 @@ function updateCliente(){
         titulo:document.getElementById("titulo").value,
         descripcion:document.getElementById("descripcion").value,
         genero:document.getElementById("genero").value,
-        duracion:document.getElementById("duracion").value,
+        duracion:document.getElementById("duracion").value * 60,
         fechaEstreno:dateToInt(document.getElementById("fecha_estreno").value),
         nombreDirector:document.getElementById("nombre_director").value,
         idTarifa:document.getElementById("id_tarifa").value,          
         precio:document.getElementById("precio").value,          
         versionIdioma:document.getElementById("version_Idioma").value,
+        imagenUrl:document.getElementById("imagen_url").value,
         idActores:document.getElementById("id_actores").value.split(",").map(actor => Number(actor.trim())),
         disponibleHasta:dateToInt(document.getElementById("disponibleHasta").value),
         disponibleDesde:dateToInt(document.getElementById("disponibleDesde").value),
@@ -546,8 +556,10 @@ function updateCliente(){
   
         fetch(ipUrl+`/api/pelicula/`,options)
         .then(res => {
-            if(res.ok)
-                alert("Se ha modificado el usuario con exito");
+            if(res.ok) {
+                alert("La película se ha modificado con éxito");
+                location.href = "ObtenerPelicula.php";
+            }
             else
                 res.json().then(json => alert(json.message));
         })

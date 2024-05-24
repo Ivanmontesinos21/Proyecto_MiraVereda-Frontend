@@ -6,20 +6,16 @@ if($_SESSION['logged']) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
 
-    <title>Crear Pelicula</title>
+    <title>Crear Película</title>
     </head>
     <body>
         <div align="center">
             <div align="left" class="thin-page-500px">
-        
-                    <a href="../CrudUserFormu/Crear_usuarios.php"  class="button accent">Crear Usuario</a>
-                    <a href="../CrudUserFormu/ObtenerUsuarios.php"  class="button accent">Usuarios</a>
-
-                    <a href="../CrudPeliFormu/ObtenerPelicula.php"  class="button accent">Cátalogo</a>
                     
-            <h2>Crear Pelicula</h2>
+            <h1>Crear Película</h1>
                 <form action="" method="post" id="crear_pelicula">
 
                 <!--
@@ -30,22 +26,22 @@ if($_SESSION['logged']) {
                 -->
                     <label for="tipo">Tipo:</label>
                     <select name="tipo" id="tipo" onchange="expandir_formulario()">
-                    <option value="pelicula">Pelicula</option>
+                    <option value="pelicula">Película</option>
                     <option value="capitulo">Capitulo</option>
                     <option value="corto">Corto</option>
 
                     </select>
                 
-                    <label for="titulo">titulo:</label>
+                    <label for="titulo">Título:</label>
                     <input type="text" id="titulo" name="titulo" required><br>
                     
-                    <label for="descripcion">descripcion:</label>
-                    <input type="text" id="descripcion" name="descripcion" required><br>
+                    <label for="descripcion">Descripción:</label>
+                    <textarea id="descripcion" name="descripcion" rows="4" required></textarea><br>
                         
                     <label for="genero">Genero:</label>
                     <input type="text" id="genero" name="genero" required><br>
                     
-                    <label for="duracion">duracion:</label>
+                    <label for="duracion">Duración (en minutos):</label>
                     <input type="number" id="duracion" name="duracion" required><br>
                     
                     <label for="fecha_estreno">Fecha estreno:</label>
@@ -54,27 +50,28 @@ if($_SESSION['logged']) {
                     <label for="nombre_director">Nombre director</label>
                     <input type="text" id="nombre_director" name="nombre_director" required><br>
                 
-                    <label for="id_tarifa">Id Tarifa: </label>
+                    <label for="id_tarifa">ID tarifa: </label>
                     <input type="text" id="id_tarifa" name="id_tarifa"><br>
                     
-                    <label for="precio">precio:</label>
+                    <label for="precio">Precio (en céntimos):</label>
                     <input type="number" id="precio" name="precio" required><br>
                     
-                    <label for="version_Idioma">Version Idioma:</label>
+                    <label for="version_Idioma">Version idioma:</label>
                     <select name="version_Idioma" id="version_Idioma">
                         
-                        <option value="V.E">versión española</option>
+                        <option value="V.E">Versión española</option>
 
-                        <option value="V.o.S.E">
-                            versión española original subtitulada
+                        <option value="V.O.S.E">
+                            Versión española original subtitulada
                         </option>
 
                     </select>
                                     
-                    <label for="id_actores">Id Actores: </label>
+                    <label for="id_actores">ID actores: </label>
                     <input type="text" id="id_actores" name="id_actores" required><br>
                     
-                        
+                    <label for="imagen_url">URL de la imagen:</label>
+                    <input type="text" id="imagen_url" name="imagen_url"><br>
 
                     <div id="parte_pelicula">
 
@@ -85,10 +82,10 @@ if($_SESSION['logged']) {
 
                     <div id="parte_capitulo" style="display:none">
 
-                        <label for="disponibleDesde">Disponible Desde:</label>
+                        <label for="disponibleDesde">Disponible desde:</label>
                         <input type="date" id="disponibleDesde" name="disponibleDesde" requiered><br>
                         
-                        <label for="idSerie">Id de Serie:</label>
+                        <label for="idSerie">ID de la serie:</label>
                         <input type="number" id="idSerie" name="idSerie" value="null" requiered><br>
 
                         <label for="temporada">Temporada:</label>
@@ -97,7 +94,8 @@ if($_SESSION['logged']) {
 
                     </div>
                 
-                    <input type="submit" class="button accent" value="Crear Pelicula">
+                    <input type="submit" class="button accent" value="Crear Película">
+                    <br><br>
                 </form>
             </div>
         </div>

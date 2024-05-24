@@ -6,23 +6,21 @@ if($_SESSION['logged']) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="../css/main.css">
 
-    <title>Leer Pelicula</title>
+    <title>Leer Película</title>
 </head>
     <body>
         <div align="center">
             <div align="left" class="thin-page-500px">
-            
-
-                    <a href="../CrudUserFormu/Crear_usuarios.php"  class="button accent">Crear Usuario</a>
-                    <a href="../CrudUserFormu/ObtenerUsuarios.php"  class="button accent">Usuarios</a>
-                    <a href="../CrudPeliFormu/Crear_pelicula.php"  class="button accent">Crear Pelicula</a>
+                <br>
+                <a href="../login/home.php">Volver al panel de administración</a>
                     
-                <h2>Leer Pelicula</h2>     
+                <h1>Leer Película</h1>     
                 <form action="" method="get" id="obtener_pelicula">
 
-                    <label for="id_ca">ID de Pelicula:</label>
+                    <label for="id_ca">ID de Película:</label>
                     <input type="number" id="id_ca" name="id_ca" required><br>
                     
                 </form>
